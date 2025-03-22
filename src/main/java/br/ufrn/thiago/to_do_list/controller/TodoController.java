@@ -8,7 +8,6 @@ import br.ufrn.thiago.to_do_list.entity.Todo;
 import br.ufrn.thiago.to_do_list.service.TodoService;
 import jakarta.validation.Valid;
 
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
