@@ -3,11 +3,12 @@ package br.ufrn.thiago.to_do_list;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import br.ufrn.thiago.to_do_list.entity.Todo;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class ToDoListApplicationTests {
 	@Autowired
 	private WebTestClient webTestClient;
@@ -18,18 +19,17 @@ class ToDoListApplicationTests {
 		
 		webTestClient
 			.post()
-			.uri(uri:"/todos")
+			.uri("/todos")
 			.bodyValue(todo)
 			.exchange()
-			.expectStatus().esOk()
+			.expectStatus().isOk()
 			.expectBody()
-			.jsonPath(expression:"$").isArray()
-			.jsonPath(expression:"$.length()").isEqualTo(expectedValue:1)
-			.jsonPath(expression:"$").isArray()
-			.jsonPath(expression:"$[0].nome").isEqualTo(todo.getNome())
-			.jsonPath(expression:"$[0].descrisao").isEqualTo(todo.getDescricao())
-			.jsonPath(expression:"$[0].realizado").isEqualTo(todo.getRealizado())
-			.jsonPath(expression:"$[0].prioridade").isEqualTo(todo.getPrioridade())
+			.jsonPath("$").isArray()
+			.jsonPath("$.length()").isEqualTo(1)
+			.jsonPath("$[0].nome").isEqualTo(todo.getNome())
+			.jsonPath("$[0].descricao").isEqualTo(todo.getDescricao())
+			.jsonPath("$[0].realizado").isEqualTo(todo.getRealizado())
+			.jsonPath("$[0].prioridade").isEqualTo(todo.getPrioridade())
 		;
 	}
 
